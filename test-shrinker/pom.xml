@@ -20,7 +20,7 @@
   <parent>
     <groupId>com.google.code.gson</groupId>
     <artifactId>gson-parent</artifactId>
-    <version>2.11.1-SNAPSHOT</version>
+    <version>2.12.2-SNAPSHOT</version>
   </parent>
   <artifactId>test-shrinker</artifactId>
   <name>Test: Code shrinking (ProGuard / R8)</name>
@@ -84,7 +84,7 @@
           <dependency>
             <groupId>com.guardsquare</groupId>
             <artifactId>proguard-core</artifactId>
-            <version>9.1.7</version>
+            <version>9.1.9</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -104,6 +104,7 @@
             <lib>${java.home}/jmods/java.compiler.jmod</lib>
           </libs>
           <!-- Include dependencies in the final JAR -->
+          <!-- Note: Currently causes warnings due to duplicate resource files, see https://github.com/wvengen/proguard-maven-plugin/issues/388 -->
           <includeDependencyInjar>true</includeDependencyInjar>
           <outjar>proguard-output.jar</outjar>
         </configuration>
@@ -132,6 +133,7 @@
                   <excludes>
                     <!-- Ignore duplicate files in dependencies -->
                     <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>META-INF/versions/9/module-info.class</exclude>
                   </excludes>
                 </filter>
               </filters>
@@ -188,7 +190,7 @@
               but it appears that can be ignored -->
             <groupId>com.android.tools</groupId>
             <artifactId>r8</artifactId>
-            <version>8.5.35</version>
+            <version>8.7.18</version>
           </dependency>
         </dependencies>
       </plugin>

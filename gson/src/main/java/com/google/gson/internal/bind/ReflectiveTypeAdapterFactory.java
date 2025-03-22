@@ -156,7 +156,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
       return adapter;
     }
 
-    ObjectConstructor<T> constructor = constructorConstructor.get(type);
+    ObjectConstructor<T> constructor = constructorConstructor.get(type, true);
     return new FieldReflectionAdapter<>(
         constructor, getBoundFields(gson, type, raw, blockInaccessible, false));
   }
@@ -283,8 +283,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
 
   private static class FieldsData {
     public static final FieldsData EMPTY =
-        new FieldsData(
-            Collections.<String, BoundField>emptyMap(), Collections.<BoundField>emptyList());
+        new FieldsData(Collections.emptyMap(), Collections.emptyList());
 
     /** Maps from JSON member name to field */
     public final Map<String, BoundField> deserializedFields;
